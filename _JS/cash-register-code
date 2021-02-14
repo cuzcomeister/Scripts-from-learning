@@ -1,0 +1,65 @@
+//cid should be an array containing arrays of each denomination of currency, lowest to highest. With denomination name and quantity*value.
+//this code will return an object giving the current status of register and the change given out if it was possible.
+//example execution: checkCashRegister(3.26, 100, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1],
+["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]])
+
+function checkCashRegister(price, cash, cid) {
+  let tillSum=sumCid(cid)*100;
+  let closedArr= [];
+  for(let i=0;i<cid.length;i++){
+    closedArr.push(cid[i]);
+  }
+  let denomVal={"PENNY":1,"NICKEL":5,"DIME":10,"QUARTER":25,"ONE":100,"FIVE":500,"TEN":1000,"TWENTY":2000,"ONE HUNDRED":10000};
+  let owed = (cash-price)*100;
+  //check if you can even afford change
+  if(owed>tillSum){
+    return {status:"INSUFFICIENT_FUNDS", change:[]}
+  }
+    else{
+      let change=giveChange(owed,cid,denomVal,tillSum);
+      let changeArr=change[0];
+      let newOwed=change[2];
+      let tillAfter=change[1];
+      //check if it's possible to break change
+      if(newOwed>0 && tillAfter>0){
+        return {status:"INSUFFICIENT_FUNDS",change:[]};
+      }else{
+          //check if you give exact change
+          if(newOwed==0&&tillAfter==0){
+            return {status:"CLOSED",change:closedArr};
+          }else{
+            return {status:"OPEN",change:changeArr};
+          }
+    }
+  }
+}
+function sumCid(cid){
+  let sum=0;
+  for(let i=0;i<cid.length;i++){
+    sum+=cid[i][1];
+  }
+  return sum;
+}
+function giveChange(owed,cid,denomVal,cidTotal){
+    let changeArr=[];
+      for(let a=cid.length-1;a>=0;a--){
+        let tokenVal = denomVal[cid[a][0]];
+        let drawerSlotSum = cid[a][1]*100;
+        let drawerSlotName = cid[a][0];
+        //if this denomination exists in till and can fit into owed
+        if(owed>tokenVal && drawerSlotSum >= tokenVal){
+          //check how many of denom can be used.
+          let tally = 0;
+          while(owed>=tokenVal&&drawerSlotSum>=tokenVal){
+            drawerSlotSum-=tokenVal;
+            owed-=tokenVal;
+            cidTotal-=tokenVal;
+            tally+=1;
+          }
+          changeArr.push([drawerSlotName,(tally*tokenVal)/100]);
+        }
+      }
+      return [changeArr,cidTotal/100,owed];
+    }
+  
+    
