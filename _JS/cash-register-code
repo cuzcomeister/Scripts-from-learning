@@ -1,7 +1,7 @@
 //cid should be an array containing arrays of each denomination of currency, lowest to highest. With denomination name and quantity*value.
 //this code will return an object giving the current status of register and the change given out if it was possible.
 //example execution: checkCashRegister(3.26, 100, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1],
-["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]])
+["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]) //
 
 function checkCashRegister(price, cash, cid) {
   let tillSum=sumCid(cid)*100;
