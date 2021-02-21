@@ -1,0 +1,41 @@
+function rot13(str) {
+  let coded = "";
+  for(let i=0;i<str.length;i++){
+  if(str.charCodeAt(i)>=65 && str.charCodeAt(i)<=90){
+    if(str.charCodeAt(i)>77){
+      coded = coded + String.fromCharCode(str.charCodeAt(i)-13);
+    }else{
+      coded = coded + String.fromCharCode(str.charCodeAt(i)+13);
+      continue
+    }
+  }else{
+    coded = coded + String.fromCharCode(str.charCodeAt(i));
+    continue
+  }
+}
+  return coded;
+}
+console.log(rot13("SERR PBQR PNZC"))
+
+// rot13("SERR PBQR PNZC");
+//iterate through string, if its a letter switch the character
+let test = "SERR PBQR PNZC";
+let testchar = test.charCodeAt(0);
+console.log(test.charCodeAt(0),String.fromCharCode(testchar));
+console.log(String.fromCharCode(65))
+console.log(String.fromCharCode(90))
+let codeTest = "";
+for(let i=0;i<test.length;i++){
+  if(test.charCodeAt(i)>=65 && test.charCodeAt(i)<=90){
+    if(test.charCodeAt(i)>77){
+      codeTest = codeTest + String.fromCharCode(test.charCodeAt(i)-13);
+    }else{
+      codeTest = codeTest + String.fromCharCode(test.charCodeAt(i)+13);
+      continue
+    }
+  }else{
+    codeTest = codeTest + String.fromCharCode(test.charCodeAt(i));
+    continue
+  }
+}
+console.log(codeTest);
