@@ -1,0 +1,105 @@
+//recursion practice from https://www.codingame.com/playgrounds/5422/js-interview-prep-recursion
+//q1
+function sumRange(n){
+    if(n==0)return 0
+    return n + sumRange(n-1)
+}
+console.log(sumRange(3))
+//q2
+function power(n,e){
+    if(e==0){return 1}
+    return n * power(n,e-1)
+}
+//q3
+function factorial(n){
+    if(n==1)return 1
+    return n*factorial(n-1)
+}
+console.log(power(2,4))
+console.log(factorial(5))
+//q4
+function all(a,f){
+    if(a.length==0)return true
+    if(f(a.shift())){
+        return all(a,f)
+    }
+    return false
+}
+console.log(all([5,5,5], function(num){
+    return num < 7;
+}))
+//q5
+function prodOfArray(a){
+    if(a.length==0){return 1}
+    return a.shift() * prodOfArray(a)
+}
+console.log(prodOfArray([1,2,3]))
+console.log(prodOfArray([1,2,3,10]))
+var nestedObject = {
+    data: {
+        info: {
+            stuff: {
+                thing: {
+                    moreStuff: {
+                        magicNumber: 44,
+                        something: 'foo2'
+                    }
+                }
+            }
+        }
+    }
+}
+//q6
+function contains(obj,val){
+    for(let key in obj){
+        if(typeof obj[key]==='object'){
+            return contains(obj[key],val)
+        }
+        if(obj[key]===val){
+            return true
+        }
+    }
+    return false
+}
+console.log(contains(nestedObject,44));
+console.log(contains(nestedObject,"foo"))
+//q7
+function countInt(a){
+    if(a.length===0)return 0
+    let val = a.shift()
+    let count = 0;
+    if(Array.isArray(val)){
+        count += count + countInt(val)
+    }
+    if(Number.isInteger(val)){
+        count +=1
+    }
+    return count += countInt(a)
+}
+console.log(countInt([[[5], 3], 0, 2, ['foo'], [], [4, [5, 6]]]))
+//q8
+function sumSq(a){
+    if(a.length===0){return 0}
+    let val = a.shift();
+    let sum = 0;
+    if(typeof val === 'object'){
+        sum += sum + sumSq(val)
+    }
+    if(typeof val === 'number'){
+        sum += val * val
+    }
+    return sum += sumSq(a)
+}
+
+console.log(sumSq([1,2,3]))
+console.log(sumSq([[1,2],3]))
+console.log(sumSq([[[[[[[[[1]]]]]]]]]))
+console.log(sumSq([10,[[10],10],[10]]))
+//q9
+function replicate(m,val){
+    if(m<=0)return []
+    return [val].concat(replicate(m-1,val))
+}
+console.log(replicate(3, 5)) 
+console.log(replicate(1, 69))
+console.log(replicate(-2, 6))
